@@ -1,12 +1,11 @@
-
-<div class="navbar">
+<div class="navbar" ng-controller="HeaderCtrl">
   <div class="navbar-inner">
     <a class="brand">AScrum</a>
     <ul class="nav">
       <li class="active"><a href="/projectsinfo">Current Projects</a>
       </li>
     </ul>
-    <ul class="nav ng-hide">
+    <ul class="nav" ng-show="isAuthenticated()">
       <li>
         <a href="/projects">My Projects</a>
       </li>
@@ -20,33 +19,33 @@
         </ul>
       </li>
     </ul>
-    <ul class="nav pull-right">
+    <ul class="nav pull-right" ng-show="hasPendingRequests()">
       <li class="divider-vertical"></li>
       <li>
         <a href="#"><img src="/static/img/spinner.gif">
         </a>
       </li>
     </ul>
-    <ul class="nav pull-right ng-scope">
+    <ul class="nav pull-right">
         <li class="divider-vertical"></li>
-        <li>
-          <a href="#" class="ng-binding"> </a>
+        <li ng-show="isAuthenticated()">
+          <a href="#"></a>
         </li>
-        <li class="logout">
+        <li class="logout" ng-show="isAuthenticated()">
           <form class="navbar-form">
             <button class="btn logout">Log out</button>
           </form>
         </li>
-        <li class="login">
+        <li class="login" ng-hide="isAuthenticated()">
           <form class="navbar-form">
-            <button class="btn login" ng-click="login()">Log in</button>
+            <button class="btn login">Log in</button>
           </form>
         </li>
     </ul>
   </div>
     <div>
       <ul class="breadcrumb">          
-        <li class="ng-scope">
+        <li>
           <span class="divider">/</span>
           projectsinfo            
         </li>          
