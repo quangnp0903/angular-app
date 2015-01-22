@@ -1,3 +1,4 @@
 angular.module('security', [
-  'security.service'
+  'security.service',
+  'security.login'
 ]);
