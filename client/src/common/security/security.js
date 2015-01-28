@@ -4,15 +4,20 @@ angular.module('security.service', [
 .factory('security', ['$http', '$dialog', function($http, $dialog){
 
   var loginDialog = null;
-  function openloginDialog() {
+  function openLoginDialog() {
     if(loginDialog) {
       throw new Error('Trying to open a dialog that is already open!');
     }
     loginDialog = $dialog.dialog();
-    loginDialog.open('security/login/form.tpl.html', '').then(onLoginDialogClose);
+    loginDialog.open('security/login/form.tpl.html', 'LoginFormController').then(onLoginDialogClose);
   }
-  function onLoginDialogClose() {
-    loginDialog = null;
+  function closeLoginDialog(success) {
+    if(loginDialog) {
+      loginDialog.close(success);
+    }
+  }
+  function onLoginDialogClose() {    
+    loginDialog = null;    
   }
   var service = {
     currentUser: null,
@@ -20,7 +25,10 @@ angular.module('security.service', [
       return !!service.currentUser;
     },
     showLogin: function() {
-      openloginDialog();
+      openLoginDialog();
+    },
+    cancelLogin: function() {
+      closeLoginDialog(true);
     }
   };
   return service;
