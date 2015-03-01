@@ -6,7 +6,7 @@ angular.module('security.login.toolbar', [])
     replace: true,
     scope: true,
     link: function($scope, $element, $attrs, $controller) {
-      $scope.login = security.showLogin;      
+      $scope.login = security.showLogin;
     }
   };
   return directive;

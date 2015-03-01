@@ -1,7 +1,7 @@
 angular.module('security.service', [
   'ui.bootstrap.dialog'
 ])
-.factory('security', ['$http', '$dialog', function($http, $dialog){
+.factory('security', ['$http', '$q', '$dialog', function($http, $q, $dialog){
 
   var loginDialog = null;
   function openLoginDialog() {
@@ -27,8 +27,30 @@ angular.module('security.service', [
     showLogin: function() {
       openLoginDialog();
     },
+    login: function(email, password) {
+      var request = $http.post('/login', {email: email, password: password});
+      return request.then(function(response) {
+        service.currentUser = response.data.user;
+        if(service.isAuthenticated()) {
+          closeLoginDialog(true);
+        }
+        return service.isAuthenticated();
+      });
+    },
     cancelLogin: function() {
       closeLoginDialog(true);
+    },
+    requestCurrentUser: function() {
+      if(service.isAuthenticated()){
+        console.log(1);
+        $q.when(service.currentUser);
+      }else{
+        console.log(2);
+        return $http.get('/current-user').then(function(response){
+          service.currentUser = response.data.user;
+          return service.currentUser;
+        });
+      }
     }
   };
   return service;
