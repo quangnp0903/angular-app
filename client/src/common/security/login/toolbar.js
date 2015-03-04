@@ -7,6 +7,13 @@ angular.module('security.login.toolbar', [])
     scope: true,
     link: function($scope, $element, $attrs, $controller) {
       $scope.login = security.showLogin;
+      $scope.logout = security.logout;
+
+      $scope.$watch(function() {
+        return security.currentUser;
+      }, function() {
+        $scope.currentUser = security.currentUser;
+      });
     }
   };
   return directive;

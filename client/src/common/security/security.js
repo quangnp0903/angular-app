@@ -1,8 +1,12 @@
 angular.module('security.service', [
   'ui.bootstrap.dialog'
 ])
-.factory('security', ['$http', '$q', '$dialog', function($http, $q, $dialog){
+.factory('security', ['$http', '$q', '$dialog', '$location', function($http, $q, $dialog, $location){
 
+  function redirect(url) {
+    url = url || '/';
+    $location.path(url);
+  }
   var loginDialog = null;
   function openLoginDialog() {
     if(loginDialog) {
@@ -37,17 +41,22 @@ angular.module('security.service', [
         return service.isAuthenticated();
       });
     },
+    logout: function(redirectTo) {
+      $http.post('/logout').then(function(){
+        service.currentUser = null;
+        redirect(redirectTo);
+      });
+      service.currentUser = null;
+    },
     cancelLogin: function() {
       closeLoginDialog(true);
     },
     requestCurrentUser: function() {
       if(service.isAuthenticated()){
-        console.log(1);
         $q.when(service.currentUser);
       }else{
-        console.log(2);
         return $http.get('/current-user').then(function(response){
-          service.currentUser = response.data.user;
+          service.currentUser = response.data.user;          
           return service.currentUser;
         });
       }

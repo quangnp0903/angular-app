@@ -9,8 +9,8 @@
       <li>
         <a href="/projects">My Projects</a>
       </li>
-      <li class="dropdown">
-        <a id="adminmenu" role="button" class="dropdown-toggle">Admin<b class="caret"></b></a>
+      <li class="dropdown" ng-class="{open: isAdminOpen}">
+        <a id="adminmenu" role="button" class="dropdown-toggle" ng-click="isAdminOpen = !isAdminOpen">Admin<b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="adminmenu">
           <li><a tabindex="-1" href="/admin/projects">Manage Projects</a>
           </li>

@@ -1,7 +1,7 @@
 <ul class="nav pull-right">
   <li class="divider-vertical"></li>
   <li ng-show="isAuthenticated()">
-    <a href="#"></a>
+    <a href="#">{{currentUser.firstName}} {{currentUser.lastName}}</a>
   </li>
   <li class="logout" ng-show="isAuthenticated()" ng-click="logout()">
     <form class="navbar-form">
